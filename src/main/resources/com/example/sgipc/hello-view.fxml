@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.HelloController">
+    <children>
+        <Label fx:id="textView" layoutX="95.0" layoutY="40.0" text="Welcome To SGIPC" textFill="#9c27b0" AnchorPane.topAnchor="40.0">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <VBox alignment="CENTER" layoutX="95.0" layoutY="100.0" spacing="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+            <children>
+                <TextField fx:id="editTextText" prefHeight="35.0" promptText="Name" />
+
+                <TextField fx:id="editTextTextEmailAddress" prefHeight="35.0" promptText="E-mail" />
+
+                <PasswordField fx:id="editTextTextPassword" prefHeight="35.0" promptText="Password" />
+
+                <HBox alignment="CENTER" spacing="30.0">
+                    <children>
+                        <Button fx:id="button" onAction="#login" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #F23072;" text="Log in" textFill="WHITE" />
+
+                        <Button fx:id="button2" onAction="#signup" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #F23072;" text="Sign up" textFill="WHITE" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

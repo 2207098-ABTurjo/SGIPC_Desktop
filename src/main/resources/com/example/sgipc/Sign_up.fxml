@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<AnchorPane prefHeight="650.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.SignUpController">
+    <children>
+        <VBox alignment="TOP_CENTER" spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
+            <children>
+                <Label fx:id="textView2" text="Enter Your Information" textFill="#03a9f4">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </Label>
+
+                <TextField fx:id="editTextText2" promptText="Enter Name" prefHeight="35.0" />
+
+                <TextField fx:id="editTextText3" promptText="Enter Roll" prefHeight="35.0" />
+
+                <TextField fx:id="editTextTextEmailAddress2" promptText="E-mail" prefHeight="35.0" />
+
+                <PasswordField fx:id="editTextTextPassword2" promptText="Enter Password" prefHeight="35.0" />
+
+                <PasswordField fx:id="editTextTextPassword3" promptText="Confirm Password" prefHeight="35.0" />
+
+                <TextField fx:id="editTextText4" promptText="Codeforces Handle" prefHeight="35.0" />
+
+                <ComboBox fx:id="spinner" prefWidth="350.0" prefHeight="35.0" promptText="Select Member Type">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Committee Member" />
+                            <String fx:value="General Member" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+
+                <Button fx:id="button3" onAction="#handleSignUp" text="Sign Up"
+                        style="-fx-background-color: #03a9f4; -fx-text-fill: white;"
+                        prefWidth="150.0" prefHeight="40.0">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Button>
+
+                <Hyperlink text="Already have an account? Log in" onAction="#backToLogin" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
