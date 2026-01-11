@@ -7,7 +7,7 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 
-<AnchorPane prefHeight="650.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.SignUpController">
+<AnchorPane prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.SignUpController">
     <children>
         <VBox alignment="TOP_CENTER" spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
             <children>
@@ -35,8 +35,7 @@
                 <ComboBox fx:id="spinner" prefWidth="350.0" prefHeight="35.0" promptText="Select Member Type">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Committee Member" />
-                            <String fx:value="General Member" />
+
                         </FXCollections>
                     </items>
                 </ComboBox>

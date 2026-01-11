@@ -5,29 +5,27 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.HomeController">
+<AnchorPane prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.HomeController">
     <children>
-        <VBox alignment="CENTER" spacing="15.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="40.0">
+        <VBox alignment="CENTER" spacing="12.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
             <children>
                 <Label text="SGIPC" textFill="#a009bc">
                     <font>
                         <Font name="System Bold" size="48.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="30.0" />
+                        <Insets bottom="15.0" />
                     </VBox.margin>
                 </Label>
 
                 <Button fx:id="upcoming_contest_button" onAction="#handleUpcomingContests" prefHeight="45.0" prefWidth="300.0" text="Upcoming Contest" />
                 <Button fx:id="upcoming_workshop_button" onAction="#handleUpcomingWorkshops" prefHeight="45.0" prefWidth="300.0" text="Upcoming Workshop" />
-
                 <Button fx:id="view_members_button" onAction="#handleViewMembers" prefHeight="45.0" prefWidth="300.0" text="View Members" />
-                <Button fx:id="committee_button" onAction="#handleViewCommittee" prefHeight="45.0" prefWidth="300.0" text="Committee" />
                 <Button fx:id="my_profile_button" onAction="#handleMyProfile" prefHeight="45.0" prefWidth="300.0" text="My Profile" />
 
-                <Button fx:id="logout_button" onAction="#handleLogout" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: #ff4444;" text="Logout" textFill="WHITE">
+                <Button fx:id="logout_button" onAction="#handleLogout" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: #ff4444; -fx-cursor: hand;" text="Logout" textFill="WHITE">
                     <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets top="10.0" />
                     </VBox.margin>
                     <font>
                         <Font name="System Bold" size="13.0" />

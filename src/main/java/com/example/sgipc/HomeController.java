@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class HomeController {
@@ -16,7 +15,6 @@ public class HomeController {
     @FXML private Button upcoming_contest_button;
     @FXML private Button upcoming_workshop_button;
     @FXML private Button view_members_button;
-    @FXML private Button committee_button;
     @FXML private Button my_profile_button;
     @FXML private Button logout_button;
 
@@ -24,86 +22,55 @@ public class HomeController {
 
     public void setRole(String role) {
         this.userRole = role;
-        System.out.println("Logged in as: " + userRole);
     }
 
     @FXML
     public void handleUpcomingContests(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("upcoming_contests.fxml"));
-            Parent root = loader.load();
-
-            UpcomingContestController contestController = loader.getController();
-            contestController.setUserRole(userRole);
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("SGIPC - Upcoming Contests");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error: Could not load upcoming_contests.fxml");
-        }
+        loadPage(event, "upcoming_contests.fxml", "Upcoming Contests");
     }
 
     @FXML
     public void handleUpcomingWorkshops(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("upcoming_workshop.fxml"));
-            Parent root = loader.load();
-            UpcomingWorkshopController controller = loader.getController();
-            controller.setUserRole(userRole); // userRole is the string we set during login
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void handleLogout(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("SGIPC - Login");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadPage(event, "upcoming_workshop.fxml", "Upcoming Workshops");
     }
 
     @FXML
     public void handleViewMembers(ActionEvent event) {
+        loadPage(event, "member_list.fxml", "Member List");
+    }
+
+    @FXML
+    public void handleMyProfile(ActionEvent event) {
+        loadPage(event, "my_profile.fxml", "My Profile");
+    }
+
+    @FXML
+    public void handleLogout(ActionEvent event) {
+        UserSession.setEmail(null);
+        loadPage(event, "hello-view.fxml", "Login");
+    }
+
+    private void loadPage(ActionEvent event, String fxmlFile, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("member_list.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
 
-            MemberListController controller = loader.getController();
-            controller.setRole(userRole); // Pass role so back button works
+            Object controller = loader.getController();
+            if (controller instanceof UpcomingContestController) {
+                ((UpcomingContestController) controller).setUserRole(userRole);
+            } else if (controller instanceof UpcomingWorkshopController) {
+                ((UpcomingWorkshopController) controller).setUserRole(userRole);
+            } else if (controller instanceof MemberListController) {
+                ((MemberListController) controller).setRole(userRole);
+            }
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("SGIPC - Member List");
+            stage.setTitle("SGIPC - " + title);
+
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    public void handleMyProfile(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("my_profile.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("SGIPC - My Profile");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) { e.printStackTrace(); }
-    }
-    @FXML public void handleViewCommittee(ActionEvent event) { System.out.println("Committee clicked"); }
 }

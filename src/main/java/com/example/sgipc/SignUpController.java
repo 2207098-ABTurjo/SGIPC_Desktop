@@ -12,13 +12,13 @@ import java.io.IOException;
 
 public class SignUpController {
 
-    @FXML private TextField editTextText2; // Name
-    @FXML private TextField editTextText3; // Roll
-    @FXML private TextField editTextTextEmailAddress2; // Email
-    @FXML private TextField editTextText4; // Codeforces Handle
-    @FXML private PasswordField editTextTextPassword2; // Password
-    @FXML private PasswordField editTextTextPassword3; // Confirm Password
-    @FXML private ComboBox<String> spinner; // Member Type
+    @FXML private TextField editTextText2;
+    @FXML private TextField editTextText3;
+    @FXML private TextField editTextTextEmailAddress2;
+    @FXML private TextField editTextText4;
+    @FXML private PasswordField editTextTextPassword2;
+    @FXML private PasswordField editTextTextPassword3;
+    @FXML private ComboBox<String> spinner;
 
     private final DatabaseHandler dbHandler = new DatabaseHandler();
 
@@ -46,6 +46,17 @@ public class SignUpController {
             return;
         }
 
+        if (!roll.matches("\\d+")) {
+            showAlert("Invalid Input", "Roll must contain only digits.");
+            return;
+        }
+
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        if (!email.matches(emailRegex)) {
+            showAlert("Invalid Input", "Please enter a valid email address (e.g., name@example.com).");
+            return;
+        }
+
         if (!password.equals(confirmPassword)) {
             showAlert("Error", "Passwords do not match");
             return;
@@ -53,9 +64,10 @@ public class SignUpController {
 
         if (dbHandler.insertUser(name, roll, email, password, codeforcesHandle, memberType)) {
             System.out.println("Sign up successful!");
+            UserSession.setEmail(email); // Set session for Profile page
             navigateToHome(event, memberType);
         } else {
-            showAlert("Database Error", "Registration failed. Email might already be in use.");
+            showAlert("Database Error", "Registration failed. Email or Roll might already be registered.");
         }
     }
 
