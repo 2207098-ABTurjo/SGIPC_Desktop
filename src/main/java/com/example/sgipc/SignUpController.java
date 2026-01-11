@@ -12,11 +12,23 @@ import java.io.IOException;
 
 public class SignUpController {
 
-    @FXML private TextField editTextText2, editTextText3, editTextTextEmailAddress2, editTextText4;
-    @FXML private PasswordField editTextTextPassword2, editTextTextPassword3;
-    @FXML private ComboBox<String> spinner;
+    @FXML private TextField editTextText2; // Name
+    @FXML private TextField editTextText3; // Roll
+    @FXML private TextField editTextTextEmailAddress2; // Email
+    @FXML private TextField editTextText4; // Codeforces Handle
+    @FXML private PasswordField editTextTextPassword2; // Password
+    @FXML private PasswordField editTextTextPassword3; // Confirm Password
+    @FXML private ComboBox<String> spinner; // Member Type
 
     private final DatabaseHandler dbHandler = new DatabaseHandler();
+
+    @FXML
+    public void initialize() {
+        if (spinner != null) {
+            spinner.getItems().addAll("General Member", "Committee Member");
+            spinner.setPromptText("Select Member Type");
+        }
+    }
 
     @FXML
     public void handleSignUp(ActionEvent event) {
@@ -43,7 +55,7 @@ public class SignUpController {
             System.out.println("Sign up successful!");
             navigateToHome(event, memberType);
         } else {
-            showAlert("Database Error", "Registration failed. Please check if the email or roll is already used.");
+            showAlert("Database Error", "Registration failed. Email might already be in use.");
         }
     }
 
@@ -53,7 +65,21 @@ public class SignUpController {
     }
 
     private void navigateToHome(ActionEvent event, String role) {
-        switchScene(event, "Home_page.fxml", "SGIPC Home");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Home_page.fxml"));
+            Parent root = loader.load();
+
+            HomeController homeController = loader.getController();
+            homeController.setRole(role);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("SGIPC - Home");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Could not load Home_page.fxml");
+            e.printStackTrace();
+        }
     }
 
     private void switchScene(ActionEvent event, String fxmlFile, String title) {

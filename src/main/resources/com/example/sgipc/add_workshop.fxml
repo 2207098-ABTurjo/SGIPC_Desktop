@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.AddWorkshopController"
+      prefWidth="450" style="-fx-background-color: #f4f4f4;">
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Label text="Add New Workshop" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="titleInput" promptText="Workshop Title" prefHeight="35"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <DatePicker fx:id="datePicker" promptText="Select Date" prefWidth="150" prefHeight="35"/>
+        <Label text="Time:"/>
+        <Spinner fx:id="hourSpinner" prefWidth="70" prefHeight="35"/>
+        <Label text=":"/>
+        <Spinner fx:id="minuteSpinner" prefWidth="70" prefHeight="35"/>
+    </HBox>
+
+    <TextField fx:id="durationInput" promptText="Duration (minutes)" prefHeight="35"/>
+
+    <Button text="Save Workshop" onAction="#handleAddWorkshop"
+            style="-fx-background-color: #a009bc; -fx-text-fill: white; -fx-font-weight: bold;"
+            maxWidth="Infinity" prefHeight="40"/>
+</VBox>

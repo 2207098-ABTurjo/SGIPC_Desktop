@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class HelloController {
 
@@ -34,11 +33,13 @@ public class HelloController {
         String role = dbHandler.validateLogin(email, password);
 
         if (role != null) {
+            UserSession.setEmail(email); // Add this line here!
             System.out.println("Login Successful! Role: " + role);
             navigateToHome(event, role);
         } else {
             showAlert("Login Failed", "Invalid email or password.");
         }
+
     }
 
     private void navigateToHome(ActionEvent event, String role) {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="600.0" prefWidth="450.0" spacing="15" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.MyProfileController">
+    <padding>
+        <Insets bottom="30" left="30" right="30" top="20" />
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Button onAction="#handleBack" style="-fx-background-color: #f0f0f0; -fx-cursor: hand;" text="← Back" />
+        <Label text="My Profile" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    </HBox>
+
+    <VBox spacing="5">
+        <Label text="Full Name" />
+        <TextField fx:id="nameField" prefHeight="35" />
+    </VBox>
+
+    <VBox spacing="5">
+        <Label text="Roll (digits only)" />
+        <TextField fx:id="rollField" prefHeight="35" />
+    </VBox>
+
+    <VBox spacing="5">
+        <Label text="Email (Cannot change)" />
+        <TextField fx:id="emailField" editable="false" prefHeight="35" style="-fx-background-color: #eeeeee;" />
+    </VBox>
+
+    <VBox spacing="5">
+        <Label text="Codeforces Handle" />
+        <TextField fx:id="handleField" prefHeight="35" />
+    </VBox>
+
+    <VBox spacing="5">
+        <Label text="Member Type" />
+        <ComboBox fx:id="typeComboBox" maxWidth="Infinity" prefHeight="35" />
+    </VBox>
+
+    <Button onAction="#handleSave" prefHeight="45" maxWidth="Infinity" style="-fx-background-color: #a009bc; -fx-text-fill: white; -fx-font-weight: bold;" text="Save Changes" />
+</VBox>

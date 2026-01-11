@@ -6,19 +6,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="600.0" prefWidth="600.0" spacing="15" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.UpcomingContestController">
+<VBox prefHeight="600.0" prefWidth="600.0" spacing="15" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.UpcomingWorkshopController">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
     <HBox alignment="CENTER_LEFT" spacing="15">
         <Button onAction="#handleBack" style="-fx-background-color: #f0f0f0; -fx-cursor: hand; -fx-font-weight: bold;" text="← Back" />
-        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Upcoming Contests" />
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Upcoming Workshops" />
     </HBox>
 
     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
-        <VBox fx:id="contestContainer" spacing="15" />
+        <VBox fx:id="workshopContainer" spacing="15" />
     </ScrollPane>
 
-    <Button fx:id="addContestButton" managed="false" maxWidth="Infinity" onAction="#openAddContestWindow" prefHeight="40.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;" text="+ Add New Contest" visible="false" />
+    <Button fx:id="addWorkshopButton" managed="false" maxWidth="Infinity" onAction="#openAddWorkshopWindow" prefHeight="40.0" style="-fx-background-color: #a009bc; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;" text="+ Add New Workshop" visible="false" />
 </VBox>

@@ -47,6 +47,22 @@ public class HomeController {
     }
 
     @FXML
+    public void handleUpcomingWorkshops(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("upcoming_workshop.fxml"));
+            Parent root = loader.load();
+            UpcomingWorkshopController controller = loader.getController();
+            controller.setUserRole(userRole); // userRole is the string we set during login
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     public void handleLogout(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
@@ -59,8 +75,35 @@ public class HomeController {
         }
     }
 
-    @FXML public void handleUpcomingWorkshops(ActionEvent event) { System.out.println("Workshops clicked"); }
-    @FXML public void handleViewMembers(ActionEvent event) { System.out.println("Members clicked"); }
+    @FXML
+    public void handleViewMembers(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("member_list.fxml"));
+            Parent root = loader.load();
+
+            MemberListController controller = loader.getController();
+            controller.setRole(userRole); // Pass role so back button works
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("SGIPC - Member List");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleMyProfile(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("my_profile.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("SGIPC - My Profile");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) { e.printStackTrace(); }
+    }
     @FXML public void handleViewCommittee(ActionEvent event) { System.out.println("Committee clicked"); }
-    @FXML public void handleMyProfile(ActionEvent event) { System.out.println("Profile clicked"); }
 }

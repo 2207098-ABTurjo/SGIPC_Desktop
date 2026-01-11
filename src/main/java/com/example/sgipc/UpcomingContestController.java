@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,6 +29,7 @@ public class UpcomingContestController {
 
     private final DatabaseHandler dbHandler = new DatabaseHandler();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private String userRole;
 
     @FXML
     public void initialize() {
@@ -35,84 +37,48 @@ public class UpcomingContestController {
     }
 
     public void setUserRole(String role) {
-        if ("Committee Member".equalsIgnoreCase(role)) {
-            addContestButton.setVisible(true);
-            addContestButton.setManaged(true);
-        } else {
-            addContestButton.setVisible(false);
-            addContestButton.setManaged(false);
-        }
+        this.userRole = role;
+        boolean isCommittee = "Committee Member".equalsIgnoreCase(role);
+        addContestButton.setVisible(isCommittee);
+        addContestButton.setManaged(isCommittee);
     }
 
     private void loadContests() {
         List<Contest> contests = dbHandler.getAllContests();
         contestContainer.getChildren().clear();
-
-        if (contests.isEmpty()) {
-            Label noContest = new Label("No upcoming contests found.");
-            contestContainer.getChildren().add(noContest);
-        } else {
-            for (Contest contest : contests) {
-                addContestCard(contest);
-            }
+        for (Contest contest : contests) {
+            addContestCard(contest);
         }
     }
 
     private void addContestCard(Contest contest) {
-        VBox card = new VBox(10);
-        card.setStyle("-fx-background-color: white; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);");
+        VBox card = new VBox(8);
+        card.setStyle("-fx-background-color: white; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 8; -fx-background-radius: 8;");
+
 
         Label title = new Label(contest.getTitle());
-        title.setStyle("-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #2c3e50;");
+        title.setStyle("-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #212121;");
 
-        Label details = new Label("Starts at: " + contest.getTime() + " | Duration: " + contest.getDuration() + " mins");
-        details.setStyle("-fx-text-fill: #7f8c8d;");
+        Label details = new Label("Starts: " + contest.getTime() + " | Duration: " + contest.getDuration() + " min");
+        details.setStyle("-fx-text-fill: #555555; -fx-font-size: 14px;");
 
-        Label countdownLabel = new Label("Calculating...");
-        countdownLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #e67e22;");
+        Label countdown = new Label("Calculating...");
+        countdown.setStyle("-fx-font-weight: bold; -fx-text-fill: #1976D2; -fx-font-size: 14px;");
+        setupCountdown(contest.getTime(), countdown);
 
-        Button linkButton = new Button("Go to Contest");
-        linkButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand;");
-        linkButton.setMaxWidth(150);
+        Button linkBtn = new Button("Go to Contest");
+        linkBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
+        linkBtn.setOnAction(e -> openBrowser(contest.getLink()));
 
-        linkButton.setOnAction(e -> openBrowser(contest.getLink()));
-
-        setupCountdown(contest.getTime(), countdownLabel);
-
-        card.getChildren().addAll(title, details, countdownLabel, linkButton);
+        card.getChildren().addAll(title, details, countdown, linkBtn);
         contestContainer.getChildren().add(card);
-    }
-
-    private void openBrowser(String url) {
-        if (url == null || url.isEmpty()) {
-            System.out.println("No URL provided for this contest.");
-            return;
-        }
-
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            url = "https://" + url;
-        }
-
-        try {
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                Desktop.getDesktop().browse(new URI(url));
-            } else {
-                Runtime runtime = Runtime.getRuntime();
-                runtime.exec("rundll32 url.dll,FileProtocolHandler " + url);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void setupCountdown(String timeStr, Label label) {
         try {
-            LocalDateTime contestTime = LocalDateTime.parse(timeStr, formatter);
-
+            LocalDateTime target = LocalDateTime.parse(timeStr, formatter);
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-                LocalDateTime now = LocalDateTime.now();
-                long diff = ChronoUnit.SECONDS.between(now, contestTime);
-
+                long diff = ChronoUnit.SECONDS.between(LocalDateTime.now(), target);
                 if (diff > 0) {
                     long hours = diff / 3600;
                     long minutes = (diff % 3600) / 60;
@@ -124,24 +90,38 @@ public class UpcomingContestController {
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
-        } catch (Exception e) {
-            label.setText("Date error");
-        }
+        } catch (Exception e) { label.setText("Date Error"); }
+    }
+
+    private void openBrowser(String url) {
+        try {
+            if (url != null && !url.isEmpty()) {
+                if (!url.startsWith("http")) url = "https://" + url;
+                Desktop.getDesktop().browse(new URI(url));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     @FXML
-    private void openAddContestWindow(ActionEvent event) {
+    private void handleBack(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("add_contest.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Home_page.fxml"));
             Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Add New Contest");
+            HomeController controller = loader.getController();
+            controller.setRole(userRole);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            loadContests();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            stage.show();
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    @FXML
+    private void openAddContestWindow(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("add_contest.fxml"));
+        Stage stage = new Stage();
+        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(loader.load()));
+        stage.showAndWait();
+        loadContests();
     }
 }
