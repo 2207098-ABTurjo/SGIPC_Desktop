@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class HelloController {
 
@@ -34,34 +35,43 @@ public class HelloController {
 
         if (role != null) {
             System.out.println("Login Successful! Role: " + role);
-            switchScene(event, "Home_page.fxml", "SGIPC Home", role);
+            navigateToHome(event, role);
         } else {
             showAlert("Login Failed", "Invalid email or password.");
         }
     }
 
-    @FXML
-    public void signup(ActionEvent event) {
-        switchScene(event, "Sign_up.fxml", "Create Account", null);
-    }
-
-    private void switchScene(ActionEvent event, String fxmlFile, String title, String role) {
+    private void navigateToHome(ActionEvent event, String role) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Home_page.fxml"));
             Parent root = loader.load();
 
+            HomeController homeController = loader.getController();
+            homeController.setRole(role);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle(title);
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Navigation Error", "Could not load " + fxmlFile);
+            System.err.println("FXML Load Error: Check if Home_page.fxml is in the correct folder.");
+        }
+    }
+
+    @FXML
+    public void signup(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("Sign_up.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private void showAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);

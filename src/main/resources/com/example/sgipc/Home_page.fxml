@@ -20,6 +20,7 @@
 
                 <Button fx:id="upcoming_contest_button" onAction="#handleUpcomingContests" prefHeight="45.0" prefWidth="300.0" text="Upcoming Contest" />
                 <Button fx:id="upcoming_workshop_button" onAction="#handleUpcomingWorkshops" prefHeight="45.0" prefWidth="300.0" text="Upcoming Workshop" />
+
                 <Button fx:id="view_members_button" onAction="#handleViewMembers" prefHeight="45.0" prefWidth="300.0" text="View Members" />
                 <Button fx:id="committee_button" onAction="#handleViewCommittee" prefHeight="45.0" prefWidth="300.0" text="Committee" />
                 <Button fx:id="my_profile_button" onAction="#handleMyProfile" prefHeight="45.0" prefWidth="300.0" text="My Profile" />

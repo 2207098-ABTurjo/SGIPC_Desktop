@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sgipc.AddContestController"
+      prefWidth="450" style="-fx-background-color: #f4f4f4;">
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Label text="Add New Contest" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+
+    <TextField fx:id="contestTitleInput" promptText="Contest Title" prefHeight="35"/>
+
+    <VBox spacing="5">
+        <Label text="Select Date and Time" style="-fx-font-weight: bold;"/>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <DatePicker fx:id="contestDatePicker" promptText="Select Date" prefWidth="150" prefHeight="35"/>
+
+            <Label text="Time:"/>
+            <Spinner fx:id="hourSpinner" prefWidth="70" prefHeight="35"/>
+            <Label text=":"/>
+            <Spinner fx:id="minuteSpinner" prefWidth="70" prefHeight="35"/>
+        </HBox>
+    </VBox>
+
+    <TextField fx:id="contestDurationInput" promptText="Duration (minutes)" prefHeight="35"/>
+
+    <TextField fx:id="contestLinkInput" promptText="Contest URL (e.g. codeforces.com)" prefHeight="35"/>
+
+    <Button text="Save Contest" onAction="#handleAddContest"
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"
+            maxWidth="Infinity" prefHeight="40"/>
+</VBox>
